@@ -43,6 +43,9 @@ struct Triggerbot {
             ImGui::SliderFloat("Triggerbot Range", &TriggerbotRange, 0, 1000, "%.0f");
             if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
                 ImGui::SetTooltip("Triggerbot's activation range.");
+            ImGui::SliderFloat("Triggerbot Delay", &TriggerbotDelay, 0, 1000, "%.0f");
+            if (ImGui::IsItemHovered(ImGuiHoveredFlags_AllowWhenDisabled))
+                ImGui::SetTooltip("Triggerbot's Delay.");
             ImGui::EndTabItem();
         }
     }
