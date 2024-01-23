@@ -420,16 +420,17 @@ struct Sense {
         }
     }
 
+
     void SetGlowState(long HighlightSettingsPointer, long HighlightSize, int HighlightID, GlowMode NewGlowMode) {
-        const GlowMode oldGlowMode = Memory::Read<GlowMode>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0x0);
+        const GlowMode oldGlowMode = Memory::Read<GlowMode>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0);
         if (NewGlowMode != oldGlowMode)
-            Memory::Write<GlowMode>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0x0, NewGlowMode);
+            Memory::Write<GlowMode>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0, NewGlowMode);
     }
 
     void SetColorState(long HighlightSettingsPointer, long HighlightSize, int HighlightID, Color NewColor) {
-        const Color oldColor = Memory::Read<Color>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0x4);
+        const Color oldColor = Memory::Read<Color>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 4);
         if (oldColor != NewColor)
-            Memory::Write<Color>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 0x4, NewColor);
+            Memory::Write<Color>(HighlightSettingsPointer + (HighlightSize * HighlightID) + 4, NewColor);
     }
 
     void SetGlow(Player* Target, int GlowEnabled, int GlowThroughWall, int HighlightID) {
@@ -443,16 +444,16 @@ struct Sense {
 
     void Update() {
         const long HighlightSettingsPointer = Memory::Read<long>(OFF_REGION + OFF_GLOW_HIGHLIGHTS);
-        const long HighlightSize = 0x34;
+        const long HighlightSize = OFF_HIGHLIGHT_TYPE_SIZE;
 
         // Item Glow //
         if (ItemGlow) {
-            for (int highlightId = 1; highlightId < 50; highlightId++) {
+            for (int highlightId = 34; highlightId < 39; highlightId++) {
                 const GlowMode newGlowMode = { 137, 138, 35, 127 };
                 SetGlowState(HighlightSettingsPointer, HighlightSize, highlightId, newGlowMode);
             }
         } else {
-            for (int highlightId = 1; highlightId < 50; highlightId++) {
+            for (int highlightId = 34; highlightId < 39; highlightId++) {
                 const GlowMode newGlowMode = StoredGlowMode->at(highlightId);
                 SetGlowState(HighlightSettingsPointer, HighlightSize, highlightId, newGlowMode);
             }
